@@ -1,0 +1,116 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title -->
+    <title>Employee Dashboard</title>
+
+    <!-- Local styling -->
+    <link rel="stylesheet" href="{%static 'css/employee_dashboard.css'%}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- For jquery and ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    
+
+    <style>
+        #home_menuitem{
+            background-color: #FFCB00;
+            padding: 15px 20px;
+            width: 200px;
+            border-radius: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main">
+        <div id="left">
+            <div id="logo">
+                <img src="{%static 'images/logo.png'%}" alt="">
+            </div>
+            {%include 'employee_menu.html' %}
+            {%block content_employeeMenu%}
+            {%endblock%}
+        </div>
+        <div id="right">
+            <div id="heading">
+                <h2>Dashboard</h2>
+                <div id="rightinner">
+                    <div id="rightinner_left">
+                        <div id="top_yellow">
+                            Good Morning <span id="name">{{name}}</span> 
+                            <br>
+                            <br>
+                            {{quote.quote}}
+                        </div>
+                        <div id="bottom_jobapplications">
+                            <div id="heading_search">
+                                <h4>Latest Jobs</h4>
+                                <a id="viewalljobapp" href="recruitment">View all</a>
+                            </div>
+                            <div id="table">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col">#</th>
+                                        <th scope="col">Name</th>
+                                        <th scope="col">Description</th>
+                                        <th scope="col">Start Date</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        {%for x in jobs%}
+                                        <tr>
+                                            <th scope="row">{{x.id}}</th>
+                                            <td class="dsc">{{x.name}}</td>
+                                            <td class="dsc" >{{x.description}}</td>
+                                            <td class="dsc">{{x.startdate}}</td>
+                                        </tr>
+                                        {%endfor%}
+                                    </tbody>
+                                </table>
+                                </div>
+                        </div>
+                    </div>
+                    <div id="rightinner_right">
+                        <div id="top_calender">
+                            <h2 id="current_date">1st July, 2022</h2>
+                        </div>
+                        <div id="employeecard">
+                            <div id="header_card">
+                                <img src="{%static 'images/user.svg'%}" alt="">
+                                <div id="info_header_card">
+                                    <h3>{{name}}</h3>
+                                    <p>Employee</p>
+                                </div>
+                            </div>
+                            <div id="footer_card">
+                                <p class="footer_p">Employee id : &nbsp;&nbsp; <span>{{id}}</span>  </p>
+                                <p class="footer_p">Joining date : &nbsp;&nbsp; <span>{{joining_date}}</span> </p> 
+                                <p class="footer_p">Time :&nbsp;&nbsp;<span><a href="" id="checkin">Check in</a></span>  </p> 
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</body>
+</html>

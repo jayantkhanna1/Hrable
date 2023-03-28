@@ -1,0 +1,189 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title -->
+    <title>Employee Dashboard</title>
+
+    <!-- Local styling -->
+    <link rel="stylesheet" href="{%static 'css/rec.css'%}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- For jquery and ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    
+
+    <style>
+        .desc{
+            height: 150px !important;
+            resize: vertical;
+        }
+        .address, .state, .city,.zipcode,.country{
+            width: 19.7%;
+        }
+        #job_menuitem{
+            background-color: #FFCB00;
+            padding: 15px 20px;
+            width: 200px;
+            border-radius: 18px;
+        }
+        #delete{
+            display: flex;
+            justify-content: space-evenly;
+        }
+        #deletebutton{
+            background-color: red;
+            padding: 16px 15px;
+            margin-top: 10px;
+            border-radius: 18px;
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+        }
+        .req,.sal,.dob,.gender{
+            width: 24.7% !important;
+        }
+        .position,.jobname,.referral{
+            width: 33% !important;
+        }
+       
+    </style>
+</head>
+<body>
+
+    <div id="main">
+        <div id="left">
+            <div id="logo">
+                <img src="{%static 'images/logo.png'%}" alt="">
+            </div>
+            {%include 'hr_menu.html' %}
+            {%block content_hrMenu%}
+            {%endblock%}
+        </div>
+        <div id="right">
+            <div id="delete">
+                <h2 id="newjobheading">Job Application Details</h2>
+            </div>
+            <div id="newjobform" >
+                <label for="name">Name of Candidate</label>
+                <input id="name" readonly class="input full" value='{{application.name}}' name="name" type="text" required placeholder="Name of Job">
+                <label for="coverletter"> Cover Later</label>
+                <textarea id="coverletter" readonly class="input full desc" name="coberleter" type="text" required placeholder="Cover Letter">{{application.cover_letter}}</textarea>
+                <div> 
+                    <div style="display: flex;justify-content:space-between; margin-right: 225px;">
+                        <label for="email">Email</label>
+                        <label for="phonenumber" style="margin-left:70px;">Phone Number:</label>
+                        <label id="dob_label" for="dob">Date of Birth:</label>
+                        <label for="gender">Gender : </label>
+                    </div>
+                    <div>
+                        <input id="email" readonly value={{application.email}} class="input req" name="email" type="email" required placeholder="Email">
+                        <input id="phonenumber" readonly class="input sal" name="mobile" type="text" required placeholder="Phone Number" value={{application.mobile_number}} >
+                        <input id="dob" readonly class="input dob" name="dob" type="text" required placeholder="Phone Number" value={{application.dob}} >
+                        <input id="gender" readonly class="input gender" name="gender" type="text" required placeholder="Gender" value={{application.gender}} >
+                    </div>
+                </div>
+               <div>
+                    <div style="display: flex; justify-content:space-between;margin-right: 310px;">
+                        <label for="position">Applying for position:</label>
+                        <label for="jobname">Applying for department:</label>
+                        <label for="referral">Referral : </label>
+                    </div>
+                    <div>
+                        <input id="position" readonly value={{application.jobname}} class="input position" name="position" type="text" required placeholder="Position">
+                        <input id="jobname" readonly value={{jobname}} class="input jobname" name="jobname" type="text" required placeholder="Jobname">
+                        <select required class="input referral" name="city" id="city">
+                            <option value="">Expand to see all referrers</option>
+                            {%for x in referral%}
+                            <option value="{{x.name_of_referrer}}">{{x.name_of_referrer}}</option>
+                            {%endfor%}
+                        </select>
+                    </div>
+                    
+               </div>
+               <div>
+                    <div style="display: flex; justify-content:space-between;margin-right: 200px;">
+                        <label for="address">Address:</label>
+                        <label for="zipcode">zipcode:</label>
+                        <label for="state" style="margin-left: -25px;">State:</label>
+                        <label for="city">City:</label>
+                        <label for="country">Country:</label>
+                        
+                    </div>
+                    <div>
+                        <input readonly id="address" value={{application.address}} class="input address" name="address" type="text" required placeholder="Enddate">
+                        <input placeholder="Zipcode" type="text" class="input zipcode" id="zipcode" readonly required name="zipcode" value="{{application.zip_code}}">
+                    
+                        <select readonly required class="input state" name="state" id="state">
+                            <option selected value="{{application.state}}">{{application.state}}</option>
+                        </select>
+                        <select required class="input city" name="city" id="city">
+                            <option selected value="{{application.city}}">{{application.city}}</option>
+                        </select>
+                        <select required class="input country" name="country" id="country">
+                            <option selected value="{{application.country}}">{{application.country}}</option>
+                        </select>
+                    </div>
+               </div>
+               <div style="display: flex; justify-content:center;">
+                    <input onclick="acceptApplication('{{application.id}}')" style="width: 49.7%; margin-right: 12px;" class="create" type="submit" value="Accept">
+                    <input onclick="rejectApplication('{{application.id}}')" style="width: 49.7%;" class="create" type="submit" value="Reject">
+               </div>
+               
+            </div>
+            <script>
+                function acceptApplication(id){
+                    $.ajax({
+                        url: 'acceptApplication',
+                        type: 'POST',
+                        data: {
+                            csrfmiddlewaretoken: '{{ csrf_token }}',  
+                            'application_id': id
+                        },
+                        success: function(data){
+                            location.reload();
+                        },
+                        alert: function(data){
+                            alert("Something went wrong");
+                        }
+                    });
+                }
+            </script>
+
+            <script>
+                function rejectApplication(id){
+                    $.ajax({
+                        url: 'rejectApplication',
+                        type: 'POST',
+                        data: {
+                            csrfmiddlewaretoken: '{{ csrf_token }}',  
+                            'application_id': id
+                        },
+                        success: function(data){
+                            location.reload();
+                        },
+                        alert: function(data){
+                            alert("Something went wrong");
+                        }
+                    });
+                }
+            </script>
+        </div>
+    </div>
+</body>
+</html>

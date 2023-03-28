@@ -1,0 +1,83 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title -->
+    <title>HR Dashboard</title>
+
+    <!-- Local styling -->
+    <link rel="stylesheet" href="{%static 'css/rec.css'%}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- For jquery and ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    
+
+    <style>
+        #onboard_menuitem{
+            background-color: #FFCB00;
+            padding: 15px 20px;
+            width: 200px;
+            border-radius: 18px;
+        }
+        #delete{
+            display: flex;
+            justify-content: space-evenly;
+        }
+        #deletebutton{
+            background-color: red;
+            padding: 16px 15px;
+            margin-top: 10px;
+            border-radius: 18px;
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main">
+        <div id="left">
+            <div id="logo">
+                <img src="{%static 'images/logo.png'%}" alt="">
+            </div>
+            {%include 'hr_menu.html' %}
+            {%block content_hrMenu%}
+            {%endblock%}
+        </div>
+        <div id="right">
+            <div id="delete">
+                <h2 id="newjobheading">Onboarding</h2>
+            </div>
+            <form id="newjobform" action="onboarding" method="POST" enctype="multipart/form-data">
+                {%csrf_token%}
+                <input class="input full" name="name" type="text" required placeholder="Name of Person">
+                <input class="input full" name="email" type="email" required placeholder="Email of person">
+                <select class="input full" name="job_id" id="jobid">
+                    <option value="">Select for which job</option>
+                    {%for x in jobs%}
+                    <option value="{{x.id}}">{{x.name}}</option>
+                    {%endfor%}
+                </select>
+                <input class="create" type="submit" value="Onboard">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

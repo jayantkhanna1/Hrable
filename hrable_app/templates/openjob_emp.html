@@ -1,0 +1,95 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title -->
+    <title>Employee Dashboard</title>
+
+    <!-- Local styling -->
+    <link rel="stylesheet" href="{%static 'css/rec.css'%}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- For jquery and ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    
+
+    <style>
+        #rec_menuitem{
+            background-color: #FFCB00;
+            padding: 15px 20px;
+            width: 200px;
+            border-radius: 18px;
+        }
+        #delete{
+            display: flex;
+            justify-content: space-evenly;
+        }
+        #deletebutton{
+            background-color: red;
+            padding: 16px 15px;
+            margin-top: 10px;
+            border-radius: 18px;
+            text-decoration: none;
+            color: white;
+            font-size: 16px;
+        }
+        .desc{
+            height: 210px !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main">
+        <div id="left">
+            <div id="logo">
+                <img src="{%static 'images/logo.png'%}" alt="">
+            </div>
+            {%include 'employee_menu.html' %}
+            {%block content_employeeMenu%}
+            {%endblock%}
+        </div>
+        <div id="right">
+            <div id="delete">
+                <h2 id="newjobheading">Job Posting Details</h2>
+            </div>
+            <form id="newjobform" action="refer" method="POST" enctype="multipart/form-data">
+                {%csrf_token%}
+                <input readonly class="input full" value='{{job.name}}' name="name" type="text" required placeholder="Name of Job">
+                <textarea readonly class="input full desc" name="description" type="text" required placeholder="Description">{{job.description}}</textarea>
+                <div> 
+                    <input readonly value={{job.requirements}} class="input req" name="requirements" type="text" required placeholder="Requirements">
+                    <input readonly value={{job.salary}} class="input sal" name="salary" type="text" required placeholder="salary">
+                </div>
+               <div>
+                    <input readonly value={{job.startdate}} class="input date" name="startdate" type="date" required placeholder="Startdate">
+                    <input readonly value={{job.enddate}} class="input date" name="enddate" type="date" required placeholder="Enddate">
+                    <select readonly required class="input state" name="state" id="state">
+                        <option selected value="{{job.state}}">{{job.state}}</option>
+                    </select>
+                    <select required class="input city" name="city" id="city">
+                        <option selected value="{{job.city}}">{{job.city}}</option>
+                    </select>
+               </div>
+               <input class="input comp" name="referral" type="email" required placeholder="Enter Email id of person you are reffering">
+                <input class="create" type="submit" value="Refer">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,111 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title -->
+    <title>HR Dashboard</title>
+
+    <!-- Local styling -->
+    <link rel="stylesheet" href="{%static 'css/rec.css'%}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- For jquery and ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    
+
+    <style>
+        #info_menuitem{
+            background-color: #FFCB00;
+            padding: 15px 20px;
+            width: 200px;
+            border-radius: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main">
+        <div id="left">
+            <div id="logo">
+                <img src="{%static 'images/logo.png'%}" alt="">
+            </div>
+            {%include 'hr_menu.html' %}
+            {%block content_hrMenu%}
+            {%endblock%}
+        </div>
+        <div id="right">
+            <div id="heading">
+                <h2>All Jobs</h2>
+                <a href="newemployee">New Employee</a>
+            </div>
+            <div id="table_jobs">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name</th>
+                        <th scope="col">Email</th>
+                        <th scope="col">Date of Birth</th>
+                        <th scope="col">Gender</th>
+                        <th scope="col">Mobile Number</th>
+                        <th scope="col">Joining date</th>
+                        <th scope="col">Department</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {%for x in employees%}
+                        
+                            <tr onclick="openemployeeinfo('{{x.id}}')" style="cursor: pointer;">
+                                <th scope="row">{{x.id}}</th>
+                                <td>{{x.name}}</td>
+                                <td class="dsc">{{x.email}}</td>
+                                <td>{{x.dob}}</td>
+                                <td>{{x.gender}}</td>
+                                <td>{{x.mobile_number}}</td>
+                                <td>{{x.joining_date}}</td>
+                                <td>{{x.department}}</td>
+                            </tr>
+                        
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openemployeeinfo(id){
+            $.ajax({
+                type : 'POST',
+                url : "openemployeeinfo",
+                method:'POST',
+                data : {  
+                    csrfmiddlewaretoken: '{{ csrf_token }}',  
+                    'employeeid': id,
+                },
+                success: function(response){
+                    window.open(response,'_blank');
+                },
+                error: function(response){
+                    alert("some error occured please reload page");
+                }
+            });
+        }
+    </script>
+</body>
+</html>

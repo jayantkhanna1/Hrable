@@ -1,0 +1,58 @@
+#home_menuitem{
+    background-color: #FFCB00;
+    padding: 15px 20px;
+    width: 200px;
+    border-radius: 18px;
+}
+#right{
+    height: 100vh !important;
+}
+#right,#heading,#form{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+#heading div>h2{
+    padding-left: 0 !important; ;
+}
+#heading{
+    width: 500px;
+    padding: 25px 40px;
+    border-radius: 18px;
+    border-top: 10px solid #FDCB2D;
+    background-color: white;
+}
+.full{
+    width: 100% !important;
+}
+#error{
+    background-color: rgba(255, 194, 194, 0.533);
+    color: red;
+    margin-bottom: 50px;
+    padding: 20px 60px;
+}
+#loginbutton{
+    background: #FDCB2D;
+    box-shadow: 0px 0px 6px 2px rgba(237, 231, 92, 0.37);
+    border-radius: 21px;
+    padding: 20px 80px;
+    outline: none;
+    border: none;
+}
+#forgotpass{
+    text-align: right !important;
+    padding-left: 290px;
+}
+
+#heading a {
+    text-align: right;
+    margin-top: 0 !important;
+    margin-left: 0 !important;
+    font-size: 15px !important;
+    color: #3382ca!important;
+    border-radius: 0 !important;
+    padding: 0 !important;
+    background-color: transparent !important;
+    text-decoration: initial !important;
+}

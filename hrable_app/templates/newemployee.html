@@ -1,0 +1,67 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title -->
+    <title>HR Dashboard</title>
+
+    <!-- Local styling -->
+    <link rel="stylesheet" href="{%static 'css/rec.css'%}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- For jquery and ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    
+
+    <style>
+        #info_menuitem{
+            background-color: #FFCB00;
+            padding: 15px 20px;
+            width: 200px;
+            border-radius: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main">
+        <div id="left">
+            <div id="logo">
+                <img src="{%static 'images/logo.png'%}" alt="">
+            </div>
+            {%include 'hr_menu.html' %}
+            {%block content_hrMenu%}
+            {%endblock%}
+        </div>
+        <div id="right">
+            <h2 id="newjobheading">New Job Posting</h2>
+            <form id="newjobform" action="addemployee" method="POST" enctype="multipart/form-data">
+                {%csrf_token%}
+                <input class="input full" name="name" type="text" required placeholder="Name of Employee">
+                <input class="input full" name="email" type="text" required placeholder="Mail of Employee">
+                <input class="input full" name="dob" type="date" required placeholder="Date of Birth">
+                <input class="input full" name="gender" type="text" required placeholder="Gender of Employee">
+                <input class="input full" name="mobnum" type="text" required placeholder="Phone Number of Employee">
+                <input class="input full" name="joindate" type="date" required placeholder="Joining Date">
+                <input class="input full" name="department" type="text" required placeholder="Employee's Department">
+                <input class="create" type="submit" value="Add">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

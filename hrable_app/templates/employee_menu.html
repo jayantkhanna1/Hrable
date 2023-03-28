@@ -1,0 +1,22 @@
+{%load static%}
+{% block content_employeeMenu%}
+<div id="menu">
+    <span class="menuitem" id="home_menuitem">
+        <img src="{%static 'images/home.svg'%}" alt="">
+        <a href="back_employee">Dashboard</a>
+    </span>
+    <span class="menuitem" id="rec_menuitem">
+        <img src="{%static 'images/rec.svg'%}" alt="">
+        <a href="recruitment">Recruitment</a>
+    </span>
+    <span class="menuitem" id="query_menuitem">
+        <img src="{%static 'images/employee_report.svg'%}" alt="">
+        <a href="reports">Reports</a>
+    </span>
+    <span class="menuitem">
+        <img src="{%static 'images/queries.svg'%}" alt="">
+        <a href="#">Profile</a>
+    </span>
+</div>
+<img src="{%static 'images/background.svg'%}" alt="bgimage" id="backgroundimg">
+{%endblock%}

@@ -1,0 +1,68 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title -->
+    <title>HR Login</title>
+
+    <!-- Local styling -->
+    <link rel="stylesheet" href="{%static 'css/hr_dashboard.css'%}">
+    <link rel="stylesheet" href="{%static 'css/login.css' %}">
+    <link rel="stylesheet" href="{%static 'css/rec.css' %}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- For jquery and ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+</head>
+<body>
+
+    <div id="main">
+        <div id="left">
+            <div id="logo">
+                <img src="{%static 'images/logo.png'%}" alt="">
+            </div>
+        </div>
+        <div id="right">
+            <div id="error">{%for message in messages%}{{message}}{%endfor%}</div>
+            <div id="heading">
+                <div id="headingtag">
+                    <h2>Hr Login</h2>
+                </div>
+                <div id="loginForm">
+                    <form id="form" action="login_hr_user" method="POST" enctype="multipart/form-data">
+                        {%csrf_token%}
+                        <input  value="dummyhr@mail.com"  class="input full" required type="email" name="email" placeholder="Email">
+                        <input  value="dummyhr" class="input full" required type="password" name="password" placeholder="Password">
+                        <div id="forgotpass"><a href="forgotpassword">Forgot Password?</a></div>
+                        <input id="loginbutton" type="submit" value="Login">
+                        <div id="employeelogin">Not an Hr? <a href="login_employee">Employee Login.</a></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script>
+        var data = document.getElementById("error").innerHTML;
+        if (data == ''){
+        document.getElementById("error").style.display = "none";
+        }
+    </script>
+</body>
+</html>
+
+
+

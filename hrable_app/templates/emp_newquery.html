@@ -1,0 +1,77 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title -->
+    <title>Employee Dashboard</title>
+
+    <!-- Local styling -->
+    <link rel="stylesheet" href="{%static 'css/rec.css'%}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- For jquery and ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    
+
+    <style>
+        #query_menuitem{
+            background-color: #FFCB00;
+            padding: 15px 20px;
+            width: 200px;
+            border-radius: 18px;
+        }
+        .date,.hr,.status{
+            width: 33% !important;
+        }
+        textarea{
+            height: 200px !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main">
+        <div id="left">
+            <div id="logo">
+                <img src="{%static 'images/logo.png'%}" alt="">
+            </div>
+            {%include 'employee_menu.html' %}
+            {%block content_employeeMenu%}
+            {%endblock%}
+        </div>
+        <div id="right">
+            <h2 id="newjobheading">Query Details</h2>
+            
+            <form id="newjobform" action="emp_newquerycreate" method="POST" enctype="multipart/form-data">
+                {%csrf_token%}
+                <input class="input full" readonly value="{{username}}" name="name" type="text" required placeholder="Name of Employee">
+                <select class="input full" required name="query_type" id="query_type">
+                    <option value="">Select Type of Query</option>
+                    <option value="Salary Problem">Salary Problem</option>
+                    <option value="Leave Request">Leave Request</option>
+                    <option value="Incedent">Incedent</option>
+                    <option value="LOR and Offboarding">LOR and Offboarding</option>
+                    <option value="Other">Other</option>
+                </select>
+                <textarea class="input full desc" name="description" type="text" required placeholder="Description of Problem"></textarea>              
+               <input class="create" type="submit" value="Create">
+            </form>   
+        </div>
+    </div>
+</body>
+</html>

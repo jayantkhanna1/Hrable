@@ -1,0 +1,103 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title -->
+    <title>Employee Dashboard</title>
+
+    <!-- Local styling -->
+    <link rel="stylesheet" href="{%static 'css/rec.css'%}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- For jquery and ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    
+
+    <style>
+        #query_menuitem{
+            background-color: #FFCB00;
+            padding: 15px 20px;
+            width: 200px;
+            border-radius: 18px;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main">
+        <div id="left">
+            <div id="logo">
+                <img src="{%static 'images/logo.png'%}" alt="">
+            </div>
+            {%include 'employee_menu.html' %}
+            {%block content_employeeMenu%}
+            {%endblock%}
+        </div>
+        <div id="right">
+            <div id="heading">
+                <h2>Your Reports</h2>
+                <a href="newquery">New Report</a>
+            </div>
+            <div id="table_jobs">
+                <table class="table table-striped">
+                    <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Name of Hr</th>
+                        <th scope="col">Date Raised</th>
+                        <th scope="col">Query Type</th>
+                        <th scope="col">Status</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                        {%for x in query%}
+                            <tr onclick="openqueryemp('{{x.id}}')" style="cursor: pointer;">
+                                <th scope="row">{{x.id}}</th>
+                                <td class="dsc">{{x.hr_acknowledging}}</td>
+                                <td class="dsc">{{x.date}}</td>
+                                <td class="dsc">{{x.query_type}}</td>
+                                <td class="dsc">{{x.status}}</td>
+                            </tr>
+                        {%endfor%}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        function openqueryemp(id){
+            $.ajax({
+                type : 'POST',
+                url : "openqueryemp",
+                method:'POST',
+                data : {  
+                    csrfmiddlewaretoken: '{{ csrf_token }}',  
+                    'query_id': id,
+                },
+                success: function(response){
+                    window.open(response,'_blank');
+                },
+                error: function(response){
+                    alert("some error occured please reload page");
+                }
+            });
+        }
+    </script>
+</body>
+</html>

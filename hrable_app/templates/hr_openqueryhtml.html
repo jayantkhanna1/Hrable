@@ -1,0 +1,108 @@
+{%load static%}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <!-- Bootstrap -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+
+    <!-- Meta tags -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Title -->
+    <title>HR Dashboard</title>
+
+    <!-- Local styling -->
+    <link rel="stylesheet" href="{%static 'css/rec.css'%}">
+
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@300;400&display=swap" rel="stylesheet">
+
+    <!-- For jquery and ajax -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+    
+
+    <style>
+        #query_menuitem{
+            background-color: #FFCB00;
+            padding: 15px 20px;
+            width: 200px;
+            border-radius: 18px;
+        }
+        .date,.hr,.status{
+            width: 33% !important;
+        }
+        textarea{
+            height: 200px !important;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="main">
+        <div id="left">
+            <div id="logo">
+                <img src="{%static 'images/logo.png'%}" alt="">
+            </div>
+            {%include 'hr_menu.html' %}
+            {%block content_hrMenu%}
+            {%endblock%}
+        </div>
+        <div id="right">
+            <h2 id="newjobheading">Query Details</h2>
+            
+            <form id="newjobform" action="queryedit" method="POST" enctype="multipart/form-data">
+                {%csrf_token%}
+                <input type="text" name="queryid" required readonly value="{{query.id}}" style="visibility: hidden;">
+                <input class="input full" readonly value="{{query.empname}}" name="name" type="text" required placeholder="Name of Employee">
+                <input class="input full" readonly value="{{query.query_type}}" name="query_type" type="text" required placeholder="Query Type">
+                <textarea class="input full desc" readonly name="description" type="text" required placeholder="Description of Problem">{{query.query}}</textarea>
+               <div>
+                    <input class="input date" name="date" type="date" readonly value="{{query.date}}" required placeholder="Date">
+                    <select required class="input status" name="status" id="state">
+                        {%if query.status == "Pending"%}
+                        <option selected value="Pending">Pending</option>
+                        {%else%}
+                        <option value="Pending">Pending</option>
+                        {%endif%}
+                        {%if query.status == "In progress"%}
+                        <option selected value="In progress">In Progress</option>
+                        {%else%}
+                        <option value="In progress">In Progress</option>
+                        {%endif%}
+                        {%if query.status == "Resolved"%}
+                        <option selected value="Resolved">Resolved</option>
+                        {%else%}
+                        <option value="Resolved">Resolved</option>
+                        {%endif%}
+                    </select>
+                    {%if query.hr_id == "Pending"%}
+                    <select required class="input hr" name="hr_id" id="city">
+                        <option value="">Select Hr</option>
+                        {%for hr in hr%}
+                        <option value="{{hr.id}}">{{hr.name}}</option>
+                        {%endfor%}
+                    </select>
+                    {%else%}
+                    <input required class="input hr" name="hr" id="city" value="{{query.hr_acknowledging}}" type="text">
+                    <input type="text" style="visibility: hidden;" name= "hr_id" required value="{{query.hr_id}}">
+                    {%endif%}
+                </div>
+                {% if query.hr_comment == "pending"%}
+                <textarea class="input full desc" name="hr_comment" type="text" required placeholder="Hr Response"></textarea>
+                {% else %}
+                <textarea class="input full desc" name="hr_comment" type="text" required placeholder="Hr Response">{{query.hr_comment}}</textarea>
+                {%endif%}
+               
+               <input class="create" type="submit" value="Save">
+            </form>   
+        </div>
+    </div>
+</body>
+</html>
